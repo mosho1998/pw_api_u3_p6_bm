@@ -10,4 +10,6 @@ public interface IMateriaService {
 	public void borrar(Integer id);
 
 	public void guardar(Materia materia);
+
+	Materia buscar(Integer id);
 }

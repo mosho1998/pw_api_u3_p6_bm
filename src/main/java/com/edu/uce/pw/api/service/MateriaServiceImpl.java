@@ -36,4 +36,10 @@ public class MateriaServiceImpl implements IMateriaService{
 		this.iMateriaRepository.insertar(materia);
 	}
 
+	@Override
+	public Materia buscar(Long long1) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
