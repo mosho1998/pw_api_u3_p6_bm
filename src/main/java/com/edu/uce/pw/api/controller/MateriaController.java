@@ -2,6 +2,7 @@ package com.edu.uce.pw.api.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -22,7 +23,7 @@ public class MateriaController {
     @Autowired
     private IMateriaService iMateriaService;
 
-    @PostMapping(path = "/guardar")
+    @PostMapping(produces = MediaType.APPLICATION_XML_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Materia> guardar(@RequestBody Materia mat) {
         this.iMateriaService.guardar(mat);
         
@@ -33,7 +34,7 @@ public class MateriaController {
 
     }
 
-    @PutMapping(path = "/actualizar")
+    @PutMapping(path = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_XML_VALUE)
     public ResponseEntity<Materia> actualizar(@RequestBody Materia mat) {
         this.iMateriaService.actualizar(mat);
         HttpHeaders cabeceraPatch= new HttpHeaders();
@@ -43,7 +44,7 @@ public class MateriaController {
 		return new ResponseEntity<>(mat,cabeceraPatch,239);
     }
 
-    @DeleteMapping(path = "/borrar/{id}")
+    @DeleteMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> borrar(@PathVariable Integer id) {
         this.iMateriaService.borrar(id);
         
@@ -53,7 +54,7 @@ public class MateriaController {
 		return new ResponseEntity<>("Eliminado correctamente",cabeceraDelete,240);
     }
 
-    @PatchMapping(path = "/{id}")
+    @PatchMapping(path = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_XML_VALUE)
     public ResponseEntity<Materia> actualizarParcial(@RequestBody Materia materia, @PathVariable Long id) {
         materia.setId(id);
         Materia materia2 = this.iMateriaService.buscar(materia.getId());
