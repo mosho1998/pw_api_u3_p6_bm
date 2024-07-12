@@ -1,6 +1,7 @@
 package com.edu.uce.pw.api.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -24,18 +25,32 @@ public class MateriaController {
     @PostMapping(path = "/guardar")
     public ResponseEntity<Materia> guardar(@RequestBody Materia mat) {
         this.iMateriaService.guardar(mat);
-        return ResponseEntity.status(201).body(mat);
+        
+		HttpHeaders cabeceraPost= new HttpHeaders();
+		cabeceraPost.add("mensaje_201", "Corresponde a la inserción de un recurso");
+		cabeceraPost.add("valor", "Materia ingresada con éxito");
+		return new ResponseEntity<>(mat ,cabeceraPost,201); 
+
     }
 
     @PutMapping(path = "/actualizar")
     public ResponseEntity<Materia> actualizar(@RequestBody Materia mat) {
         this.iMateriaService.actualizar(mat);
-        return ResponseEntity.status(238).body(mat);
+        HttpHeaders cabeceraPatch= new HttpHeaders();
+		cabeceraPatch.add("mensaje_239", "Corresponde a la actualización parcial de un recurso");
+		cabeceraPatch.add("valor", "Materia actualizado parcialmente");
+		//return ResponseEntity.status(239).body(est2);
+		return new ResponseEntity<>(mat,cabeceraPatch,239);
     }
 
     @DeleteMapping(path = "/borrar/{id}")
-    public void borrar(@PathVariable Integer id) {
+    public ResponseEntity<String> borrar(@PathVariable Integer id) {
         this.iMateriaService.borrar(id);
+        
+        HttpHeaders cabeceraDelete= new  HttpHeaders();
+		cabeceraDelete.add("mensaje_240", "Corresponde a la eliminación del recurso");
+		cabeceraDelete.add("valor", "MAteria eliminada");
+		return new ResponseEntity<>("Eliminado correctamente",cabeceraDelete,240);
     }
 
     @PatchMapping(path = "/{id}")
