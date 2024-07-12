@@ -3,7 +3,7 @@ package com.edu.uce.pw.api.service;
 import com.edu.uce.pw.api.repository.modelo.Materia;
 
 public interface IMateriaService {
-	public Materia buscar(Integer id);
+	public Materia buscar(Long long1);
 
 	public void actualizar(Materia materia);
 

@@ -58,4 +58,24 @@ public class Materia {
 		this.creditos = creditos;
 	}
 
+	public Object getProfesor() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void setProfesor(Object profesor) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public Object getCodigoUnico() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void setCodigoUnico(Object codigoUnico) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
