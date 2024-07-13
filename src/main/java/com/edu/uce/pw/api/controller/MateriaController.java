@@ -55,7 +55,7 @@ public class MateriaController {
     }
 
     @PatchMapping(path = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_XML_VALUE)
-    public ResponseEntity<Materia> actualizarParcial(@RequestBody Materia materia, @PathVariable Long id) {
+    public ResponseEntity<Materia> actualizarParcial(@RequestBody Materia materia, @PathVariable Integer id) {
         materia.setId(id);
         Materia materia2 = this.iMateriaService.buscar(materia.getId());
 

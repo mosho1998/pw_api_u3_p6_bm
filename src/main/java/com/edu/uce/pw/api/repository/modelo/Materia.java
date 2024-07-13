@@ -5,6 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
@@ -15,7 +17,7 @@ public class Materia {
 	@GeneratedValue(generator = "seq_materia", strategy = GenerationType.SEQUENCE)
 	@SequenceGenerator(name = "seq_materia", sequenceName = "seq_materia", allocationSize = 1)
 	@Column(name = "materia_id")
-	private Long id;
+	private Integer id;
 
 	@Column(name = "materia_nombre")
 	private String nombre;
@@ -25,12 +27,28 @@ public class Materia {
 
 	@Column(name = "materia_creditos")
 	private int creditos;
+	
+	@ManyToOne
+	@JoinColumn(name="mate_id_estudiante")
+	private Estudiante estudiante;
+	
+	
 
-	public Long getId() {
+	public Estudiante getEstudiante() {
+		return estudiante;
+	}
+
+	public void setEstudiante(Estudiante estudiante) {
+		this.estudiante = estudiante;
+	}
+
+	
+
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
