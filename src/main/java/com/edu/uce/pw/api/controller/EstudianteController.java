@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.edu.uce.pw.api.repository.modelo.Estudiante;
+import com.edu.uce.pw.api.repository.modelo.Materia;
 import com.edu.uce.pw.api.service.IEstudianteService;
 import com.edu.uce.pw.api.service.IMateriaService;
 import com.edu.uce.pw.api.service.to.EstudianteTO;
@@ -175,6 +176,21 @@ public class EstudianteController {
 	@GetMapping(path = "/{id}/materias", produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<MateriaTO> buscarMateriasPorIdEstudiante(@PathVariable Integer id) {
 		return this.iMateriaService.seleccionarPorIdEstudiante(id);
+	}
+
+	@GetMapping(path = "/hateoasEst", produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<EstudianteTO> buscarEstudianteTOHateoas() {
+
+		List<EstudianteTO> lista = this.estudianteService.bsucarTodosEstudiantes();
+
+		for (EstudianteTO est : lista) {
+			Link myLink = linkTo(methodOn(EstudianteController.class).buscarMateriasPorIdEstudiante(est.getId()))
+					.withRel("susMaterias");
+
+			est.add(myLink);
+		}
+
+		return lista;
 	}
 
 }

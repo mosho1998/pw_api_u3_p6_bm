@@ -9,7 +9,7 @@ import com.edu.uce.pw.api.service.to.EstudianteTO;
 public interface IEstudianteService {
 	// CRUD
 	public Estudiante buscar(Integer id);
-	
+
 	public EstudianteTO buscarPorId(Integer id);
 
 	public void actualizar(Estudiante estudiante);
@@ -17,8 +17,9 @@ public interface IEstudianteService {
 	public void borrar(Integer id);
 
 	public void guardar(Estudiante estudiante);
-	
+
 	List<Estudiante> buscarPorGenero(String genero);
-	
-	
+
+	List<EstudianteTO> bsucarTodosEstudiantes();
+
 }
