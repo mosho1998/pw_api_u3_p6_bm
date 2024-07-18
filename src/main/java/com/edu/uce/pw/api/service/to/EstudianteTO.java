@@ -4,11 +4,14 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.hibernate.boot.jaxb.hbm.internal.RepresentationModeConverter;
+import org.springframework.hateoas.RepresentationModel;
+
 import com.edu.uce.pw.api.repository.modelo.Materia;
 
 import jakarta.persistence.OneToMany;
 
-public class EstudianteTO implements Serializable {
+public class EstudianteTO extends RepresentationModel implements Serializable {
 
 	private static final long serialVersionUID = 7522247553314511578L;
 
@@ -19,20 +22,20 @@ public class EstudianteTO implements Serializable {
 	private String genero;
 
 	@OneToMany(mappedBy = "estudiante")
-	private List<MateriaTO> materias;
+	//private List<MateriaTO> materias;
 	
 
 	
 	
 	// GET Y SET
 
-	public List<MateriaTO> getMaterias() {
-		return materias;
-	}
-
-	public void setMaterias(List<MateriaTO> materias) {
-		this.materias = materias;
-	}
+//	public List<MateriaTO> getMaterias() {
+//		return materias;
+//	}
+//
+//	public void setMaterias(List<MateriaTO> materias) {
+//		this.materias = materias;
+//	}
 //SET Y GET
 	public Integer getId() {
 		return id;

@@ -1,8 +1,12 @@
 package com.edu.uce.pw.api.controller;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.Link;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +37,7 @@ public class EstudianteController {
 
 	@Autowired
 	private IMateriaService iMateriaService;
+
 	// http://localhost:8080/API/v1.0/Matricula/estudiantes/guardar
 	// Nivel 1: http://localhost:8080/API/v1.0/Matricula/estudiantes
 	@PostMapping(produces = "application/json", consumes = "application/xml")
@@ -107,7 +112,7 @@ public class EstudianteController {
 
 	// http://localhost:8080/API/v1.0/Matricula/estudiantes/buscar/1/nuevo/prueba
 	// Nivel 1: http://localhost:8080/API/v1.0/Matricula/estudiantes/1
-	@GetMapping(path = "/{id}", produces = "application/xml")
+	@GetMapping(path = "/{id}", produces = "application/json")
 	public ResponseEntity<Estudiante> buscarPorId(@PathVariable Integer id) {
 		// return ResponseEntity.status(236).body(this.estudianteService.buscar(id));
 		HttpHeaders cabeceras = new HttpHeaders();
@@ -150,14 +155,26 @@ public class EstudianteController {
 		return this.estudianteService.buscar(id);
 	}
 
-	@GetMapping(path = "/hateoas/{id}")
+	@GetMapping(path = "/hateoas/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public EstudianteTO buscarHateoas(@PathVariable Integer id) {
 		EstudianteTO est = this.estudianteService.buscarPorId(id);
-		List<MateriaTO> lista = this.iMateriaService.seleccionarPorIdEstudiante(id);
-		est.setMaterias(lista);
+
+		// ERROR esto es una carga EAGER
+		// List<MateriaTO> lista = this.iMateriaService.seleccionarPorIdEstudiante(id);
+		// est.setMaterias(lista);
+		Link myLink = linkTo(methodOn(EstudianteController.class).buscarMateriasPorIdEstudiante(id))
+				.withRel("susMaterias");
+
+		Link myLink2 = linkTo(methodOn(EstudianteController.class).buscarPorId(id)).withSelfRel();
+		est.add(myLink);
+		est.add(myLink2);
 		return est;
 	}
-	
-	
+
+	// http://localhost:8080/API/v1.0/Matricula/estudiantes/7/materias GET
+	@GetMapping(path = "/{id}/materias", produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<MateriaTO> buscarMateriasPorIdEstudiante(@PathVariable Integer id) {
+		return this.iMateriaService.seleccionarPorIdEstudiante(id);
+	}
 
 }
